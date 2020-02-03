@@ -16,17 +16,18 @@ io.on('connection', function (socket) {
 
 
   //JOIN THE ROOM
-  socket.on('join room', function (roomname) {
-    socket.join(roomname);
-    console.log('a user connected to room : ' + roomname);
-    io.sockets.in(roomname).emit('connectToRoom', "You are in room : " + roomname);
+  socket.on('join room', function (data) {
+
+    socket.join(data.roomname);
+    console.log(data.userID + ' connected to room : ' + data.roomname);
+    io.sockets.in(roomname).emit('connectToRoom', data.userID + ' connected to room : ' + data.roomname);
   });
 
   //handle chat messages
   socket.on('chat message', function (data) {
-    io.sockets.in(data.roomID).emit('chat message', 'Room ' + data.roomID + '... chat message: ' + data.message);
+    io.sockets.in(data.roomID).emit('chat message', '[Room ' + data.roomID + '] [' + data.userID + '] message: ' + data.message);
     //io.emit('chat message', msg);
-    console.log('chat message', 'Room ' + data.roomID + '... chat message: ', data.message);
+    console.log('chat message', '[Room ' + data.roomID + '] [' + data.userID + '] message: ' + data.message);
   });
 
   //user disconnect

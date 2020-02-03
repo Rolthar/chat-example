@@ -18,9 +18,9 @@ io.on('connection', function (socket) {
   //JOIN THE ROOM
   socket.on('join room', function (data) {
 
-    socket.join(data.roomname);
-    console.log(data.userID + ' connected to room : ' + data.roomname);
-    io.sockets.in(roomname).emit('connectToRoom', data.userID + ' connected to room : ' + data.roomname);
+    socket.join(data.currentRoom);
+    console.log(data.userID + ' connected to room : ' + data.currentRoom);
+    io.sockets.in(currentRoom).emit('connectToRoom', data.userID + ' connected to room : ' + data.currentRoom);
   });
 
   //handle chat messages

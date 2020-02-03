@@ -92,8 +92,9 @@
       function RoomConnectClick() {
         if ($('#roomname').val() != null && $('#roomname').val() != '') {
 
-          if ($('#userinput').val() != null && $('#userinput').val() != '') {
+          if ($('#userinput').val() == '') {
             alert('make a username');
+            return;
           }
           _userID = $('#userinput').val();
           socket = io();
@@ -108,7 +109,7 @@
       function SendMessage() {
         if ($('#m').val() != null && $('#m').val() != "") {
           var MyMessage = $('#m').val();
-          socket.emit('chat message', { roomID: _currentRoom, message: MyMessage, userID: _userID });
+          socket.emit('chat message', { currentRoom: _currentRoom, message: MyMessage, userID: _userID });
           $('#m').val('');
         }
       }

@@ -104,7 +104,7 @@
           _currentRoom = $('#roomname').val();
           $('#messages').append($('<li>').text(_currentRoom));
           //$('#roomname').val('');
-          socket.emit('join room', { userID: _userID, currentRoom: _currentRoom });
+          socket.emit('join room', JSON.stringify({ userID: _userID, currentRoom: _currentRoom }));
 
         }
       }
@@ -112,7 +112,7 @@
       function SendMessage() {
         if ($('#m').val() != null && $('#m').val() != "") {
           var MyMessage = $('#m').val();
-          socket.emit('chat message', { roomID: _currentRoom, message: MyMessage, userID: _userID });
+          socket.emit('chat message', JSON.stringify({ roomID: _currentRoom, message: MyMessage, userID: _userID }));
           $('#m').val('');
         }
       }

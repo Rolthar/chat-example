@@ -17,7 +17,7 @@ io.on('connection', function (socket) {
 
   //JOIN THE ROOM
   socket.on('join room', function (data) {
-    //var jsonobj = JSON.parse(data)
+    data = JSON.parse(data);
     console.log(data);
     socket.join(data.currentRoom);
     console.log(data.userID + ' connected to room : ' + data.currentRoom);
@@ -26,6 +26,8 @@ io.on('connection', function (socket) {
 
   //handle chat messages
   socket.on('chat message', function (data) {
+    data = JSON.parse(data);
+    console.log(data);
     io.sockets.in(data.roomID).emit('chat message', '[Room ' + data.roomID + '] [' + data.userID + '] message: ' + data.message);
     //io.emit('chat message', msg);
     console.log('chat message', '[Room ' + data.roomID + '] [' + data.userID + '] message: ' + data.message);

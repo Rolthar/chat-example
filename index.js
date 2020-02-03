@@ -20,7 +20,7 @@ io.on('connection', function (socket) {
 
     socket.join(data.currentRoom);
     console.log(data.userID + ' connected to room : ' + data.currentRoom);
-    io.sockets.in(currentRoom).emit('connectToRoom', data.userID + ' connected to room : ' + data.currentRoom);
+    io.sockets.in(data.currentRoom).emit('connectToRoom', data.userID + ' connected to room : ' + data.currentRoom);
   });
 
   //handle chat messages

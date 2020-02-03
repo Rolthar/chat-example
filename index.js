@@ -18,8 +18,9 @@ io.on('connection', function (socket) {
   //JOIN THE ROOM
   socket.on('join room', function (data) {
     console.log("JOIN ROOM FUNCTION RECEIVED!!!!!!!!!!!!!!!!!");
-
     data = JSON.parse(data);
+    io.socket.emit('chat message', data);
+
     console.log(data);
     socket.join(data.currentRoom);
     console.log(data.userID + ' connected to room : ' + data.currentRoom);
@@ -30,6 +31,7 @@ io.on('connection', function (socket) {
   socket.on('chat message', function (data) {
     data = JSON.parse(data);
     console.log(data);
+    io.socket.emit('chat message', data);
     io.sockets.in(data.roomID).emit('chat message', '[Room ' + data.roomID + '] [' + data.userID + '] message: ' + data.message);
     //io.emit('chat message', msg);
     console.log('chat message', '[Room ' + data.roomID + '] [' + data.userID + '] message: ' + data.message);

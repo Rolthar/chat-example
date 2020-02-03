@@ -62,7 +62,10 @@
   <br>
   <input id="m" autocomplete="off" /><button id="sendBRN">Send</button>
   <br>
+  <br>
   <input id="userinput" autocomplete="off" />
+  <p>USERNAME</p>
+
 
   <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
   <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
@@ -100,7 +103,7 @@
           socket = io();
           _currentRoom = $('#roomname').val();
           $('#messages').append($('<li>').text(_currentRoom));
-          $('#roomname').val('');
+          //$('#roomname').val('');
           socket.emit('join room', { userID: _userID, currentRoom: _currentRoom });
 
         }
@@ -109,7 +112,7 @@
       function SendMessage() {
         if ($('#m').val() != null && $('#m').val() != "") {
           var MyMessage = $('#m').val();
-          socket.emit('chat message', { currentRoom: _currentRoom, message: MyMessage, userID: _userID });
+          socket.emit('chat message', { roomID: _currentRoom, message: MyMessage, userID: _userID });
           $('#m').val('');
         }
       }

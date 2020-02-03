@@ -17,6 +17,8 @@ io.on('connection', function (socket) {
 
   //JOIN THE ROOM
   socket.on('join room', function (data) {
+    console.log("JOIN ROOM FUNCTION RECEIVED!!!!!!!!!!!!!!!!!");
+
     data = JSON.parse(data);
     console.log(data);
     socket.join(data.currentRoom);

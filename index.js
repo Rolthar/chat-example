@@ -34,6 +34,7 @@ io.on('connection', function (socket) {
     io.sockets.emit('chat message', data);
     io.sockets.in(data.roomID).emit('chat message', '[Room ' + data.roomID + '] [' + data.userID + '] message: ' + data.message);
     //io.emit('chat message', msg);
+    //ugh
     console.log('chat message', '[Room ' + data.roomID + '] [' + data.userID + '] message: ' + data.message);
   });
 

@@ -20,7 +20,7 @@ io.on('connection', function (socket) {
     }
 
     try {
-      var clients = io.sockets.clients(data.currentRoom);
+      var clients = io.sockets.adapter.rooms[data.currentRoom];
       console.log('Deleting room : ' + data.currentRoom);
       for (var client in clients) {
 

@@ -45,7 +45,7 @@ io.on('connection', function (socket) {
 
 
     try {
-      socket.join(data.currentRoom);
+      socket.leave(data.currentRoom);
       console.log(data.userID + ' left room : ' + data.currentRoom);
       io.sockets.in(data.currentRoom).emit('leave room', data.userID + ' left room : ' + data.currentRoom);
     }

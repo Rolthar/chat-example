@@ -21,7 +21,7 @@ io.on('connection', function (socket) {
     // data = JSON.parse(data);
     // io.sockets.emit('chat message', data);
 
-    console.log(data);
+    console.log("Raw Data Join Room: " + data);
     // socket.join(data.currentRoom);
     // console.log(data.userID + ' connected to room : ' + data.currentRoom);
     // io.sockets.in(data.currentRoom).emit('connectToRoom', data.userID + ' connected to room : ' + data.currentRoom);
@@ -29,6 +29,7 @@ io.on('connection', function (socket) {
 
   //handle chat messages
   socket.on('chat message', function (data) {
+    console.log("Raw Data chat message: " + data);
     data = JSON.parse(data);
     console.log(data);
     io.sockets.emit('chat message', data);

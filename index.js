@@ -22,9 +22,11 @@ io.on('connection', function (socket) {
     try {
       console.log('Deleting room : ' + data.currentRoom);
 
-      var roster = io.sockets.clients(data.currentRoom);
+      // var clients = io.sockets.adapter.rooms[data.currentRoom].sockets;
 
-      roster.forEach(function (client) {
+      var clients = io.sockets.adapter.rooms[room].;
+
+      clients.forEach(function (client) {
         console.log('Username: ' + client.nickname);
         client.leave(data.currentRoom);
       });

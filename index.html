@@ -66,6 +66,10 @@
   <input id="userinput" autocomplete="off" />
   <p>USERNAME</p>
 
+  <br>
+  <br>
+  <button id="deleteroom">DeleteRoom</button>
+
 
   <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
   <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
@@ -78,6 +82,8 @@
       var socket = io();
       document.getElementById('roomnameBTN').onclick = RoomConnectClick;
       document.getElementById('sendBRN').onclick = SendMessage;
+
+      document.getElementById('deleteroom').onclick = DeleteRoom;
 
       // $('form').submit(function () {
       //   e.preventDefault();
@@ -115,6 +121,11 @@
           socket.emit('chat message', JSON.stringify({ roomID: _currentRoom, message: MyMessage, userID: _userID }));
           $('#m').val('');
         }
+      }
+
+      function DeleteRoom() {
+        socket.emit('delete room', JSON.stringify({ currentRoom: _currentRoom, userID: _userID }));
+
       }
     });
 

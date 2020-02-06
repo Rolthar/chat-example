@@ -20,11 +20,12 @@ io.on('connection', function (socket) {
     }
 
     try {
-      var clients = findClientsSocket(data.currentRoom);
+      var clients = io.sockets.clients(data.currentRoom);
       console.log('Deleting room : ' + data.currentRoom);
       for (var client in clients) {
-        client.leave(client.currentRoom);
-        console.log(client.userID + ' left room : ' + data.currentRoom);
+
+        client.leave(data.currentRoom);
+        console.log('A user left room : ' + data.currentRoom);
 
       }
     }

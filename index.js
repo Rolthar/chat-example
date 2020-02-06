@@ -8,11 +8,30 @@ app.get('/', function (req, res) {
   res.sendFile(__dirname + '/index.html');
 });
 
-//list of users
-var list = new List("big oof", "MAMMOTH");
+
 
 io.on('connection', function (socket) {
   //user connected, log then bind events
+
+  socket.on('delete room', function (data) {
+    if (isJson(data)) {
+      var parseddata = JSON.parse(data);
+      data = parseddata;
+    }
+
+    try {
+      var clients = findClientsSocket(data.currentRoom);
+      console.log('Deleting room : ' + data.currentRoom);
+      for (var client in clients) {
+        client.leave(client.currentRoom);
+        console.log(client.userID + ' left room : ' + data.currentRoom);
+
+      }
+    }
+    catch (error) {
+      console.error(error);
+    }
+  });
 
 
   //JOIN THE ROOM
@@ -53,6 +72,8 @@ io.on('connection', function (socket) {
       console.error(error);
     }
   });
+
+
 
   //handle chat messages
   socket.on('chat message', function (data) {

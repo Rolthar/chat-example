@@ -35,6 +35,25 @@ io.on('connection', function (socket) {
     }
   });
 
+  socket.on('leave room', function (data) {
+    //console.log("Raw Data Join Room: " + data);
+
+    if (isJson(data)) {
+      var parseddata = JSON.parse(data);
+      data = parseddata;
+    }
+
+
+    try {
+      socket.join(data.currentRoom);
+      console.log(data.userID + ' left room : ' + data.currentRoom);
+      io.sockets.in(data.currentRoom).emit('leave room', data.userID + ' left room : ' + data.currentRoom);
+    }
+    catch (error) {
+      console.error(error);
+    }
+  });
+
   //handle chat messages
   socket.on('chat message', function (data) {
 

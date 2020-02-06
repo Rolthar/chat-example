@@ -17,15 +17,10 @@ io.on('connection', function (socket) {
 
   //JOIN THE ROOM
   socket.on('join room', function (data) {
-    // console.log("JOIN ROOM FUNCTION RECEIVED!!!!!!!!!!!!!!!!!");
-    // data = JSON.parse(data);
-    // io.sockets.emit('chat message', data);
-
-    console.log("Raw Data Join Room: " + data);
+    //console.log("Raw Data Join Room: " + data);
 
     try {
       var parseddata = JSON.parse(data);
-      console.log("Parsed Join Room: " + data.userID + ' connected to room : ' + data.currentRoom);
       data = parseddata;
     }
     catch (error) {
@@ -33,21 +28,39 @@ io.on('connection', function (socket) {
       //error because already an object
     }
 
-    socket.join(data.currentRoom);
-    console.log(data.userID + ' connected to room : ' + data.currentRoom);
-    io.sockets.in(data.currentRoom).emit('connectToRoom', data.userID + ' connected to room : ' + data.currentRoom);
+
+    try {
+      socket.join(data.currentRoom);
+      console.log(data.userID + ' connected to room : ' + data.currentRoom);
+      io.sockets.in(data.currentRoom).emit('connectToRoom', data.userID + ' connected to room : ' + data.currentRoom);
+    }
+    catch (error) {
+      console.error(error);
+    }
   });
 
   //handle chat messages
   socket.on('chat message', function (data) {
-    console.log("Raw Data chat message: " + data);
-    data = JSON.parse(data);
-    console.log(data);
-    io.sockets.emit('chat message', data);
-    io.sockets.in(data.roomID).emit('chat message', '[Room ' + data.roomID + '] [' + data.userID + '] message: ' + data.message);
-    //io.emit('chat message', msg);
-    //ugh
-    console.log('chat message', '[Room ' + data.roomID + '] [' + data.userID + '] message: ' + data.message);
+    // console.log("Raw Data chat message: " + data);
+
+
+    try {
+      var parseddata = JSON.parse(data);
+      data = parseddata;
+    }
+    catch (error) {
+      console.error(error);
+      //error because already an object
+    }
+
+
+    try {
+      io.sockets.in(data.roomID).emit('chat message', '[Room ' + data.roomID + '] [' + data.userID + '] message: ' + data.message);
+      console.log('chat message', '[Room ' + data.roomID + '] [' + data.userID + '] message: ' + data.message);
+    }
+    catch (error) {
+      console.error(error);
+    }
   });
 
   //user disconnect

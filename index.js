@@ -19,13 +19,9 @@ io.on('connection', function (socket) {
   socket.on('join room', function (data) {
     //console.log("Raw Data Join Room: " + data);
 
-    try {
+    if (!isJson(data)) {
       var parseddata = JSON.parse(data);
       data = parseddata;
-    }
-    catch (error) {
-      console.error(error);
-      //error because already an object
     }
 
 
@@ -41,17 +37,13 @@ io.on('connection', function (socket) {
 
   //handle chat messages
   socket.on('chat message', function (data) {
-    console.log("Raw Data chat message: " + data);
 
 
-    try {
+    if (!isJson(data)) {
       var parseddata = JSON.parse(data);
       data = parseddata;
     }
-    catch (error) {
-      console.error(error);
-      //error because already an object
-    }
+
 
 
     try {
@@ -72,3 +64,12 @@ io.on('connection', function (socket) {
 http.listen(port, function () {
   console.log('listening on *:' + port);
 });
+
+function isJson(str) {
+  try {
+    JSON.parse(str);
+  } catch (e) {
+    return false;
+  }
+  return true;
+}

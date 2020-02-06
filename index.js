@@ -41,7 +41,7 @@ io.on('connection', function (socket) {
 
   //handle chat messages
   socket.on('chat message', function (data) {
-    // console.log("Raw Data chat message: " + data);
+    console.log("Raw Data chat message: " + data);
 
 
     try {

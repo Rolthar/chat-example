@@ -20,14 +20,22 @@ io.on('connection', function (socket) {
     }
 
     try {
-      var clients = io.sockets.adapter.rooms[data.currentRoom];
       console.log('Deleting room : ' + data.currentRoom);
-      for (var client in clients) {
 
+      var roster = io.sockets.clients(data.currentRoom);
+
+      roster.forEach(function (client) {
+        console.log('Username: ' + client.nickname);
         client.leave(data.currentRoom);
-        console.log('A user left room : ' + data.currentRoom);
+      });
+      // var clients = io.sockets.adapter.rooms[data.currentRoom];
+      // console.log('Deleting room : ' + data.currentRoom);
+      // for (var client in clients) {
 
-      }
+      //   client.leave(data.currentRoom);
+      //   console.log('A user left room : ' + data.currentRoom);
+
+      // }
     }
     catch (error) {
       console.error(error);

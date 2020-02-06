@@ -24,17 +24,18 @@ io.on('connection', function (socket) {
     console.log("Raw Data Join Room: " + data);
 
     try {
-      data = JSON.parse(data);
+      var parseddata = JSON.parse(data);
       console.log("Parsed Join Room: " + data.userID + ' connected to room : ' + data.currentRoom);
+      data = parseddata;
     }
     catch (error) {
       console.error(error);
-
+      //error because already an object
     }
 
-    // socket.join(data.currentRoom);
-    // console.log(data.userID + ' connected to room : ' + data.currentRoom);
-    // io.sockets.in(data.currentRoom).emit('connectToRoom', data.userID + ' connected to room : ' + data.currentRoom);
+    socket.join(data.currentRoom);
+    console.log(data.userID + ' connected to room : ' + data.currentRoom);
+    io.sockets.in(data.currentRoom).emit('connectToRoom', data.userID + ' connected to room : ' + data.currentRoom);
   });
 
   //handle chat messages

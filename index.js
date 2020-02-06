@@ -19,7 +19,7 @@ io.on('connection', function (socket) {
   socket.on('join room', function (data) {
     //console.log("Raw Data Join Room: " + data);
 
-    if (!isJson(data)) {
+    if (isJson(data)) {
       var parseddata = JSON.parse(data);
       data = parseddata;
     }
@@ -39,7 +39,7 @@ io.on('connection', function (socket) {
   socket.on('chat message', function (data) {
 
 
-    if (!isJson(data)) {
+    if (isJson(data)) {
       var parseddata = JSON.parse(data);
       data = parseddata;
     }

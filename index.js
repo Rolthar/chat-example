@@ -22,9 +22,15 @@ io.on('connection', function (socket) {
     // io.sockets.emit('chat message', data);
 
     console.log("Raw Data Join Room: " + data);
-    data = JSON.parse(data);
-    console.log("Parsed Join Room: " + data.userID + ' connected to room : ' + data.currentRoom);
 
+    try {
+      data = JSON.parse(data);
+      console.log("Parsed Join Room: " + data.userID + ' connected to room : ' + data.currentRoom);
+    }
+    catch (error) {
+      console.error(error);
+
+    }
 
     // socket.join(data.currentRoom);
     // console.log(data.userID + ' connected to room : ' + data.currentRoom);

@@ -57,6 +57,27 @@ io.on('connection', function (socket) {
     }
   });
 
+  //   var room = io.sockets.adapter.rooms['my_room'];
+  // return room.length > 0;
+  socket.on('Does Room Exist', function (data) {
+    //console.log("Raw Data Join Room: " + data);
+
+    if (isJson(data)) {
+      var parseddata = JSON.parse(data);
+      data = parseddata;
+    }
+
+
+    try {
+
+      var room = io.sockets.adapter.rooms[data.currentRoom];
+
+      socket.emit('Does Room Exist', room.length > 0);
+    }
+    catch (error) {
+      console.error(error);
+    }
+  });
 
   //JOIN THE ROOM
   socket.on('join room', function (data) {

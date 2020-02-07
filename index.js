@@ -76,6 +76,8 @@ io.on('connection', function (socket) {
     }
     catch (error) {
       console.error(error);
+      socket.emit('Does Room Exist', false);
+
     }
   });
 

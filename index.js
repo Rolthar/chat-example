@@ -23,9 +23,6 @@ io.on('connection', function (socket) {
     try {
       console.log('Deleting room : ' + data.currentRoom);
 
-      // var clients = io.sockets.adapter.rooms[data.currentRoom].sockets;
-      var room = io.sockets.adapter.rooms[data.currentRoom];
-
       io.sockets.in(data.currentRoom).emit('delete room', "The room [" + data.currentRoom + "] has been closed...");
 
       io.of('/').in(data.currentRoom).clients((error, socketIds) => {

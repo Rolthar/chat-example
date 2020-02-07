@@ -14,6 +14,31 @@ app.get('/', function (req, res) {
 io.on('connection', function (socket) {
   //user connected, log then bind events
 
+  socket.on('room roster update', function (data) {
+
+    if (isJson(data)) {
+      var parseddata = JSON.parse(data);
+      data = parseddata;
+    }
+
+
+    try {
+      socket.join(data.currentRoom);
+      console.log(data.userID + ' connected to room : ' + data.currentRoom);
+      io.sockets.in(data.currentRoom).emit('connectToRoom', data.userID + ' connected to room : ' + data.currentRoom);
+
+      io.sockets.in(data.currentRoom).emit('Host Room Roster Update', data.userID);
+
+
+      //Host Room Roster Update"
+    }
+    catch (error) {
+      console.error(error);
+    }
+  });
+
+
+
   socket.on('delete room', function (data) {
     if (isJson(data)) {
       var parseddata = JSON.parse(data);
@@ -53,6 +78,7 @@ io.on('connection', function (socket) {
       socket.join(data.currentRoom);
       console.log(data.userID + ' connected to room : ' + data.currentRoom);
       io.sockets.in(data.currentRoom).emit('connectToRoom', data.userID + ' connected to room : ' + data.currentRoom);
+      io.sockets.in(data.currentRoom).emit('Host Room Roster Update', data.userID);
     }
     catch (error) {
       console.error(error);

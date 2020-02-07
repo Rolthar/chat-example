@@ -97,6 +97,10 @@
         $('#messages').append($('<li>').text(msg));
         window.scrollTo(0, document.body.scrollHeight);
       });
+      socket.on('delete room', function (msg) {
+        $('#messages').append($('<li>').text(msg));
+        window.scrollTo(0, document.body.scrollHeight);
+      });
 
       function RoomConnectClick() {
         if ($('#roomname').val() != null && $('#roomname').val() != '') {

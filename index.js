@@ -1,5 +1,6 @@
 var app = require('express')();
 var http = require('http').Server(app);
+
 var io = require('socket.io')(http);
 var List = require("collections/list");
 var port = process.env.PORT || 3000;
@@ -23,21 +24,17 @@ io.on('connection', function (socket) {
       console.log('Deleting room : ' + data.currentRoom);
 
       // var clients = io.sockets.adapter.rooms[data.currentRoom].sockets;
+      var room = io.sockets.adapter.rooms[data.currentRoom];
 
-      var clients = io.sockets.adapter.rooms[room].;
+      io.sockets.in(data.currentRoom).emit('delete room', "The room [" + data.currentRoom + "] has been closed...");
 
-      clients.forEach(function (client) {
-        console.log('Username: ' + client.nickname);
-        client.leave(data.currentRoom);
+      io.of('/').in(data.currentRoom).clients((error, socketIds) => {
+        if (error) throw error;
+
+        socketIds.forEach(socketId => io.sockets.sockets[socketId].leave(data.currentRoom));
+        console.log("A user Left room " + data.currentRoom);
       });
-      // var clients = io.sockets.adapter.rooms[data.currentRoom];
-      // console.log('Deleting room : ' + data.currentRoom);
-      // for (var client in clients) {
 
-      //   client.leave(data.currentRoom);
-      //   console.log('A user left room : ' + data.currentRoom);
-
-      // }
     }
     catch (error) {
       console.error(error);

@@ -14,7 +14,7 @@ app.get('/', function (req, res) {
 io.on('connection', function (socket) {
   //user connected, log then bind events
 
-  socket.on('room roster update', function (data) {
+  socket.on('Update Client Rosters', function (data) {
 
     if (isJson(data)) {
       var parseddata = JSON.parse(data);
@@ -23,14 +23,8 @@ io.on('connection', function (socket) {
 
 
     try {
-      socket.join(data.currentRoom);
-      console.log(data.userID + ' connected to room : ' + data.currentRoom);
-      io.sockets.in(data.currentRoom).emit('connectToRoom', data.userID + ' connected to room : ' + data.currentRoom);
-
-      io.sockets.in(data.currentRoom).emit('Host Room Roster Update', data.userID);
-
-
-      //Host Room Roster Update"
+      //broadcast to all clients in room except room host
+      socket.broadcast.to(data.currentRoom).emit('Client Update Roster', data);
     }
     catch (error) {
       console.error(error);
@@ -78,12 +72,16 @@ io.on('connection', function (socket) {
       socket.join(data.currentRoom);
       console.log(data.userID + ' connected to room : ' + data.currentRoom);
       io.sockets.in(data.currentRoom).emit('connectToRoom', data.userID + ' connected to room : ' + data.currentRoom);
+
+      //update host roster
       io.sockets.in(data.currentRoom).emit('Host Room Roster Update', data.userID);
     }
     catch (error) {
       console.error(error);
     }
   });
+
+
 
   socket.on('leave room', function (data) {
     //console.log("Raw Data Join Room: " + data);

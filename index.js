@@ -148,8 +148,8 @@ io.on('connection', function (socket) {
   });
 
   //user disconnect
-  socket.on('disconnect', function () {
-    console.log('user disconnected');
+  socket.on('disconnect', function (socket) {
+    console.log(socket + 'user disconnected');
   });
 });
 

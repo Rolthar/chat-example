@@ -155,16 +155,22 @@ io.on('connection', function (socket) {
   socket.on('disconnect', function (socket) {
     console.log('user disconnected');
     if (isHost) {
-      console.log('Host left room : ' + currentRoomId + '... Deleting room');
+      try {
+        console.log('Host left room : ' + currentRoomId + '... Deleting room');
 
-      io.sockets.in(currentRoomIdm).emit('delete room', "The room [" + currentRoomId + "] has been closed...");
+        io.sockets.in(currentRoomIdm).emit('delete room', "The room [" + currentRoomId + "] has been closed...");
 
-      io.of('/').in(currentRoomId).clients((error, socketIds) => {
-        if (error) throw error;
+        io.of('/').in(currentRoomId).clients((error, socketIds) => {
+          if (error) throw error;
 
-        socketIds.forEach(socketId => io.sockets.sockets[socketId].leave(currentRoomId));
-        console.log("A user Left room " + currentRoomId);
-      });
+          socketIds.forEach(socketId => io.sockets.sockets[socketId].leave(currentRoomId));
+          console.log("A user Left room " + currentRoomId);
+        });
+      }
+      catch (error) {
+        console.error(error);
+      }
+
     }
   });
 });

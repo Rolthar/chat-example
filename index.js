@@ -152,7 +152,7 @@ io.on('connection', function (socket) {
 
   //user disconnect
   socket.on('disconnect', function (socket) {
-    console.log(data.currentRoom + ' host user disconnected');
+    console.log(currentRoomId + ' host user disconnected');
   });
 });
 

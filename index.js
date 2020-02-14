@@ -35,6 +35,7 @@ io.on('connection', function (socket) {
 
 
   socket.on('delete room', function (data) {
+    isHost = false;
     if (isJson(data)) {
       var parseddata = JSON.parse(data);
       data = parseddata;
@@ -111,7 +112,7 @@ io.on('connection', function (socket) {
 
   socket.on('leave room', function (data) {
     //console.log("Raw Data Join Room: " + data);
-
+    isHost = false;
     if (isJson(data)) {
       var parseddata = JSON.parse(data);
       data = parseddata;

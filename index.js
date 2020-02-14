@@ -14,7 +14,7 @@ app.get('/', function (req, res) {
 io.on('connection', function (socket) {
   //user connected, log then bind events
   var currentRoomId;
-
+  var isHost;
   socket.on('Update Client Rosters', function (data) {
 
     if (isJson(data)) {
@@ -100,6 +100,7 @@ io.on('connection', function (socket) {
 
       //update host roster
       io.sockets.in(data.currentRoom).emit('Host Room Roster Update', data.userID);
+      isHost = data.isHost;
     }
     catch (error) {
       console.error(error);
@@ -152,7 +153,19 @@ io.on('connection', function (socket) {
 
   //user disconnect
   socket.on('disconnect', function (socket) {
-    console.log(currentRoomId + ' host user disconnected');
+    console.log('user disconnected');
+    if (isHost) {
+      console.log('Host left room : ' + currentRoomId + '... Deleting room');
+
+      io.sockets.in(currentRoomIdm).emit('delete room', "The room [" + currentRoomId + "] has been closed...");
+
+      io.of('/').in(currentRoomId).clients((error, socketIds) => {
+        if (error) throw error;
+
+        socketIds.forEach(socketId => io.sockets.sockets[socketId].leave(currentRoomId));
+        console.log("A user Left room " + currentRoomId);
+      });
+    }
   });
 });
 

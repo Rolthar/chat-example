@@ -158,7 +158,7 @@ io.on('connection', function (socket) {
       try {
         console.log('Host left room : ' + currentRoomId + '... Deleting room');
 
-        io.sockets.in(currentRoomIdm).emit('delete room', "The room [" + currentRoomId + "] has been closed...");
+        io.sockets.in(currentRoomId).emit('delete room', "The room [" + currentRoomId + "] has been closed...");
 
         io.of('/').in(currentRoomId).clients((error, socketIds) => {
           if (error) throw error;

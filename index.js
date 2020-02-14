@@ -13,6 +13,7 @@ app.get('/', function (req, res) {
 
 io.on('connection', function (socket) {
   //user connected, log then bind events
+  var currentRoomId;
 
   socket.on('Update Client Rosters', function (data) {
 
@@ -93,6 +94,7 @@ io.on('connection', function (socket) {
 
     try {
       socket.join(data.currentRoom);
+      currentRoomId = data.currentRoom;
       console.log(data.userID + ' connected to room : ' + data.currentRoom);
       io.sockets.in(data.currentRoom).emit('connectToRoom', data.userID + ' connected to room : ' + data.currentRoom);
 
@@ -150,7 +152,7 @@ io.on('connection', function (socket) {
 
   //user disconnect
   socket.on('disconnect', function (socket) {
-    console.log(socket + 'user disconnected');
+    console.log(data.currentRoom + ' host user disconnected');
   });
 });
 

@@ -70,6 +70,9 @@
   <br>
   <button id="deleteroom">DeleteRoom</button>
 
+  <br>
+  <br>
+  <button id="startquest">Start Uest</button>
 
   <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
   <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
@@ -84,11 +87,15 @@
       document.getElementById('sendBRN').onclick = SendMessage;
 
       document.getElementById('deleteroom').onclick = DeleteRoom;
+      document.getElementById('startquest').onclick = StartQuest;
+
 
       // $('form').submit(function () {
       //   e.preventDefault();
       //   return false;
       // });
+
+
       socket.on('connectToRoom', function (msg) {
         $('#messages').append($('<li>').text(msg));
         window.scrollTo(0, document.body.scrollHeight);
@@ -101,6 +108,14 @@
         $('#messages').append($('<li>').text(msg));
         window.scrollTo(0, document.body.scrollHeight);
       });
+
+      function StartQuest() {
+        _currentRoom = $('#roomname').val();
+        socket.emit('Start Quest', JSON.stringify({ currentRoom: _currentRoom }));
+
+        // socket.emit('Start Quest', "START");
+
+      }
 
       function RoomConnectClick() {
         if ($('#roomname').val() != null && $('#roomname').val() != '') {

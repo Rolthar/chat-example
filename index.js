@@ -34,6 +34,26 @@ io.on('connection', function (socket) {
 
 
 
+  socket.on('Start Quest', function (data) {
+    //console.log("Raw Data Join Room: " + data);
+    isHost = false;
+    if (isJson(data)) {
+      var parseddata = JSON.parse(data);
+      data = parseddata;
+    }
+
+
+    try {
+      console.log(data.currentRoom + " Quest is starting...");
+      io.sockets.in(data.currentRoom).emit('Start Quest', data);
+    }
+    catch (error) {
+      console.error(error);
+    }
+  });
+
+
+
   socket.on('delete room', function (data) {
     isHost = false;
     if (isJson(data)) {

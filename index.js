@@ -44,8 +44,8 @@ io.on('connection', function (socket) {
 
 
     try {
-      console.log(data.currentRoom + " Quest is starting...");
-      io.sockets.in(data.currentRoom).emit('Start Quest', data);
+      console.log(data.roomID + " Quest is starting...");
+      io.sockets.in(data.roomID).emit('Start Quest', data);
     }
     catch (error) {
       console.error(error);
@@ -195,6 +195,9 @@ io.on('connection', function (socket) {
     }
   });
 });
+
+
+
 
 http.listen(port, function () {
   console.log('listening on *:' + port);

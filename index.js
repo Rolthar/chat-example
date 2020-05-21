@@ -119,7 +119,7 @@ io.on('connection', function (socket) {
   //JOIN THE ROOM
   socket.on('join room', function (data) {
     //console.log("Raw Data Join Room: " + data);
-
+    isHost = false;
     if (isJson(data)) {
       var parseddata = JSON.parse(data);
       data = parseddata;

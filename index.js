@@ -32,11 +32,24 @@ io.on('connection', function (socket) {
     }
   });
 
+  socket.on('Fog Update', function (data) {
 
+    if (isJson(data)) {
+      var parseddata = JSON.parse(data);
+      data = parseddata;
+    }
+
+
+    try {
+      console.log(data.currentRoom + " fog update...");
+      io.sockets.in(data.currentRoom).emit('Fog Update', data);
+    }
+    catch (error) {
+      console.error(error);
+    }
+  });
 
   socket.on('Start Quest', function (data) {
-    //console.log("Raw Data Join Room: " + data);
-    isHost = false;
     if (isJson(data)) {
       var parseddata = JSON.parse(data);
       data = parseddata;

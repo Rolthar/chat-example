@@ -15,6 +15,7 @@ io.on('connection', function (socket) {
   //user connected, log then bind events
   var currentRoomId;
   var isHost;
+
   socket.on('Update Client Rosters', function (data) {
 
     if (isJson(data)) {
@@ -133,7 +134,7 @@ io.on('connection', function (socket) {
       io.sockets.in(data.currentRoom).emit('connectToRoom', data.userID + ' connected to room : ' + data.currentRoom);
 
       //update host roster
-      io.sockets.in(data.currentRoom).emit('Host Room Roster Update', data.userID);
+      io.sockets.in(data.currentRoom).emit('Host Room Roster Update', data);
       isHost = data.isHost;
     }
     catch (error) {

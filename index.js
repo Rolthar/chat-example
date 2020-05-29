@@ -50,6 +50,43 @@ io.on('connection', function (socket) {
     }
   });
 
+  socket.on('SendPlayerDungeonRoster', function (data) {
+
+    if (isJson(data)) {
+      var parseddata = JSON.parse(data);
+      data = parseddata;
+    }
+
+    try {
+      io.sockets.in(currentRoomId).emit('SendPlayerDungeonRoster', data);
+    }
+    catch (error) {
+      console.error(error);
+    }
+  });
+
+  socket.on('Player Token Moved', function (data) {
+
+    if (isJson(data)) {
+      var parseddata = JSON.parse(data);
+      data = parseddata;
+    }
+
+    try {
+      io.sockets.in(currentRoomId).emit('Player Token Moved', data);
+    }
+    catch (error) {
+      console.error(error);
+    }
+  });
+
+
+
+
+
+
+
+
   socket.on('Start Quest', function (data) {
     if (isJson(data)) {
       var parseddata = JSON.parse(data);

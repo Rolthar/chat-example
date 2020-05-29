@@ -50,6 +50,26 @@ io.on('connection', function (socket) {
     }
   });
 
+  socket.on('EncounterUpdate', function (data) {
+
+    if (isJson(data)) {
+      var parseddata = JSON.parse(data);
+      data = parseddata;
+    }
+
+
+    try {
+      console.log(data.currentRoom + "Encounter update...");
+      io.sockets.in(data.currentRoom).emit('EncounterUpdate', data);
+    }
+    catch (error) {
+      console.error(error);
+    }
+  });
+
+
+
+
   socket.on('SendPlayerDungeonRoster', function (data) {
 
     if (isJson(data)) {

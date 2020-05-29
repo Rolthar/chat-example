@@ -60,7 +60,7 @@ io.on('connection', function (socket) {
     try {
       console.log(data.currentRoom + " Sending Player In Dungeon Roster");
 
-      io.sockets.in(data.currentRoo).emit('SendPlayerDungeonRoster', data);
+      io.sockets.in(data.currentRoom).emit('SendPlayerDungeonRoster', data);
     }
     catch (error) {
       console.error(error);

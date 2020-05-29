@@ -58,7 +58,9 @@ io.on('connection', function (socket) {
     }
 
     try {
-      io.sockets.in(currentRoomId).emit('SendPlayerDungeonRoster', data);
+      console.log(data.currentRoom + " Sending Player In Dungeon Roster");
+
+      io.sockets.in(data.currentRoo).emit('SendPlayerDungeonRoster', data);
     }
     catch (error) {
       console.error(error);
@@ -73,7 +75,9 @@ io.on('connection', function (socket) {
     }
 
     try {
-      io.sockets.in(currentRoomId).emit('Player Token Moved', data);
+      console.log(data.currentRoom + "Player Token Moved!  ");
+
+      io.sockets.in(data.currentRoom).emit('Player Token Moved', data);
     }
     catch (error) {
       console.error(error);

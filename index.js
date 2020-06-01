@@ -50,6 +50,23 @@ io.on('connection', function (socket) {
     }
   });
 
+  socket.on('Did Quest Start', function (data) {
+
+    if (isJson(data)) {
+      var parseddata = JSON.parse(data);
+      data = parseddata;
+    }
+
+
+    try {
+      console.log(data + "Did Quest Start...");
+      io.sockets.in(data).emit('Did Quest Start', data);
+    }
+    catch (error) {
+      console.error(error);
+    }
+  });
+
   socket.on('EncounterUpdate', function (data) {
 
     if (isJson(data)) {

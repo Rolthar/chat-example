@@ -149,6 +149,7 @@ io.on('connection', function (socket) {
     var data = io.sockets.adapter.rooms;
 
     io.sockets.emit('RequestAllRoomData', data);
+    io.sockets.emit(socket.rooms, data);
 
   });
 

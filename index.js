@@ -144,6 +144,14 @@ io.on('connection', function (socket) {
     }
   });
 
+  socket.on('RequestAllRoomData', function () {
+
+    var data = socket.rooms;
+
+    io.sockets.emit('RequestAllRoomData', data);
+
+  });
+
   socket.on('Change Map', function (data) {
     if (isJson(data)) {
       var parseddata = JSON.parse(data);

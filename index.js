@@ -161,7 +161,7 @@ io.on('connection', function (socket) {
 
 
     try {
-      console.log(data.roomID + " DM Changed map");
+      console.log(data.roomID + " DM Changed map to " + data.map.MapName);
       io.sockets.in(data.roomID).emit('Change Map', data);
     }
     catch (error) {
